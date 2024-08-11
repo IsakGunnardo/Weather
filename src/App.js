@@ -11,13 +11,17 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [cityName, setCityName] = useState("");
 
-  const fetchWeatherData = async (CityName) => {
+  const fetchWeatherData = async (lat, lon, cityName) => {
     let ApiKey = "a11c88756aec36ee894ac9495fe9747a";
+    let url;
 
+    if (cityName) {
+      url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${ApiKey}`;
+    } else {
+      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${ApiKey}`;
+    }
     try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${CityName}&appid=${ApiKey}`
-      );
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -31,6 +35,24 @@ function App() {
     }
   };
 
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchWeatherData(latitude, longitude);
+        },
+        (error) => {
+          console.error("Error getting location");
+          setLoading(false);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser");
+      setLoading(false);
+    }
+  };
+
   const handleInputChange = (event) => {
     setCityName(event.target.value);
   };
@@ -38,7 +60,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    fetchWeatherData(cityName);
+    fetchWeatherData(null, null, cityName);
   };
 
   const getBackgroundImage = () => {
@@ -59,7 +81,9 @@ function App() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getUserLocation();
+  }, []);
   return (
     <div
       className="App"
@@ -95,24 +119,23 @@ function App() {
               </p>
             </div>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-              <div style={{display: "flex"}}> 
+              <div style={{ display: "flex" }}>
                 <p>↓</p>
-              <p>
-                Low <br /> {(data.main.temp_min - 273.15).toFixed(2)}°C
-              </p>
+                <p>
+                  Low <br /> {(data.main.temp_min - 273.15).toFixed(2)}°C
+                </p>
               </div>
-              <div style={{display: "flex"}}> 
+              <div style={{ display: "flex" }}>
+                <p>↑</p>
 
-              <p>↑</p>
-
-              <p>
-                High <br />
-                {(data.main.temp_max - 273.15).toFixed(2)}°C
-              </p>
+                <p>
+                  High <br />
+                  {(data.main.temp_max - 273.15).toFixed(2)}°C
+                </p>
               </div>
             </div>
             <br />
-            <p>{data.weather[0].main}</p>
+            {/* <p>{data.weather[0].main}</p> */}
             <p>{data.weather[0].description}</p>
           </div>
         ) : (
