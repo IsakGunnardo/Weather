@@ -84,15 +84,17 @@ function App() {
           <p>Loading...</p>
         ) : data ? (
           <div className="infoSection">
-            <p>{data.name}</p>
-            <p>{(data.main.temp - 273.15).toFixed(2)}°C</p>
-            <p>Feels like {(data.main.feels_like - 273.15).toFixed(2)}°C</p>
+            <p style={{fontSize: "40px"}}>{data.name}</p>
+            <p>Current temp <br/> {(data.main.temp - 273.15).toFixed(2)}°C</p>
+            <p>Feels like <br/>{(data.main.feels_like - 273.15).toFixed(2)}°C</p>
+            <div style={{display: "flex" , justifyContent: "space-evenly"}}>
             <p>
-              Lowest Temp today {(data.main.temp_min - 273.15).toFixed(2)}°C
+              Low <br/> {(data.main.temp_min - 273.15).toFixed(2)}°C
             </p>
             <p>
-              Highest Temp today {(data.main.temp_max - 273.15).toFixed(2)}°C
+              High <br/>{(data.main.temp_max - 273.15).toFixed(2)}°C
             </p>
+            </div>
             <br />
             <p>{data.weather[0].main}</p>
             <p>{data.weather[0].description}</p>

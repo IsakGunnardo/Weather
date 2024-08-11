@@ -16,10 +16,16 @@
   align-self: center;
 }
 .infoSection{
-  background-color: rgba(245, 245, 245, 0.3);
+  background-color: rgba(36, 172, 226, 0.8);
 
   text-align: center;
   width: 300px;
   height: auto;
   border: 1px solid black;
+  border-radius: 5%;
+}
+
+p{
+  font-size: 20px;
+  font-weight: 500;
 }
