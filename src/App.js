@@ -42,7 +42,7 @@ function App() {
   };
 
   const getBackgroundImage = () => {
-    if (!data || !data.weather) return "";
+    if (!data || !data.weather) return `url(${Clear})`;
     switch (data.weather[0].main) {
       case "Clear":
         return `url(${Clear})`;
@@ -84,16 +84,32 @@ function App() {
           <p>Loading...</p>
         ) : data ? (
           <div className="infoSection">
-            <p style={{fontSize: "40px"}}>{data.name}</p>
-            <p>Current temp <br/> {(data.main.temp - 273.15).toFixed(2)}°C</p>
-            <p>Feels like <br/>{(data.main.feels_like - 273.15).toFixed(2)}°C</p>
-            <div style={{display: "flex" , justifyContent: "space-evenly"}}>
-            <p>
-              Low <br/> {(data.main.temp_min - 273.15).toFixed(2)}°C
-            </p>
-            <p>
-              High <br/>{(data.main.temp_max - 273.15).toFixed(2)}°C
-            </p>
+            <p style={{ fontSize: "40px" }}>{data.name}</p>
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+              <p>
+                Current temp <br /> {(data.main.temp - 273.15).toFixed(2)}°C
+              </p>
+              <p>
+                Feels like <br />
+                {(data.main.feels_like - 273.15).toFixed(2)}°C
+              </p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+              <div style={{display: "flex"}}> 
+                <p>↓</p>
+              <p>
+                Low <br /> {(data.main.temp_min - 273.15).toFixed(2)}°C
+              </p>
+              </div>
+              <div style={{display: "flex"}}> 
+
+              <p>↑</p>
+
+              <p>
+                High <br />
+                {(data.main.temp_max - 273.15).toFixed(2)}°C
+              </p>
+              </div>
             </div>
             <br />
             <p>{data.weather[0].main}</p>
