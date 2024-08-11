@@ -1,0 +1,25 @@
+.App{
+  padding: 5%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+
+}
+
+
+.weatherWrapper{
+  margin-top: 5%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+.infoSection{
+  background-color: rgba(245, 245, 245, 0.3);
+
+  text-align: center;
+  width: 300px;
+  height: auto;
+  border: 1px solid black;
+}
